@@ -1,0 +1,37 @@
+@use "../variables" as v;
+@use "../mixins" as m;
+
+.dashboard {
+    padding: 2rem;
+
+    &__title {
+        font-size: v.$font-large;
+        color: v.$primary-color;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    &__warehouses {
+        @include m.flex-center;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        .warehouse{
+            background-color: v.$secondary-color;
+            color: #fff;
+            padding: 1rem;
+            border-radius: .5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            &__name {
+                font-weight: bold;
+            }
+
+            &__status {
+                font-size: v.$font-small;
+                color: v.$error-color;
+            }
+        }
+    }
+}
+

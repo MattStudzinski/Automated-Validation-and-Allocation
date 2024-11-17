@@ -1,0 +1,32 @@
+.dashboard {
+  padding: 2rem;
+}
+.dashboard__title {
+  font-size: 1.25rem;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.dashboard__warehouses {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.dashboard__warehouses .warehouse {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.dashboard__warehouses .warehouse__name {
+  font-weight: bold;
+}
+.dashboard__warehouses .warehouse__status {
+  font-size: 0.8rem;
+  color: #dc3545;
+}
+
+/*# sourceMappingURL=output.css.map */
