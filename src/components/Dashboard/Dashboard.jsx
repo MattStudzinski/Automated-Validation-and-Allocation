@@ -20,8 +20,8 @@ const Dashboard = () => {
         fetchWarehouses()
     }, [])
 
-    const handleNavigate = (id) => {
-        navigate(`/warehouse/${id}`)
+    const handleNavigate = (warehouseId) => {
+        navigate(`/warehouses/${warehouseId}`)
     }
     
     return (
