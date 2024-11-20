@@ -15,12 +15,13 @@ const Warehouse = () => {
             try {
                 const response = await fetch(`http://localhost:5002/warehouses/${id}`)
                 const result = await response.json()
-                console.log("fetched data:", result)
-                console.log("products data", result.products)
+                result.products.forEach((product) =>
+                    console.log("Trend:", product.trend || "No trend")
+                );
 
                 if(result.products) {
-                    const grouped = result.product.reduce((acc, product) => {
-                        const trend = products.trend.toLocaleLowerCase().replace(" ", "_")
+                    const grouped = result.products.reduce((acc, product) => {
+                        const trend = product.trend?.toLowerCase().replace(" ", "_") || "unknown"
                         if (!acc[trend]) acc[trend] = []
                         acc[trend].push(product)
                         return acc
@@ -41,30 +42,38 @@ const Warehouse = () => {
     }
 
     console.log(data)
+    console.log("Grouped Data Structure:", groupedData);
 
     if (!data) {
         return <p>Loading warehouse data...</p>
     }
+
+    const sectionMapping = {
+        Redistributed: "redistributed",
+        "Maxes Raised": "increasing",
+        "Maxes Lowered": "decreasing",
+        "Flagged for Removal": "consider_removal",
+      };
+
     return (
         <div className='results'>
             <h1 className='results__title'> Warehouse {data.fileName}</h1>
             <div className='results__sections'>
-                {["Redistributed", "Maxes Raised", "Maxes Lowered", "Flagged for Removal"].map((section) => {
-                    const sectionKey = section.toLowerCase().replace(" ", "_")
-                    const items = groupedData[sectionKey] || []
+                {Object.entries(sectionMapping).map(([displayName, key]) => {
+                    const items = groupedData[key] || []
                     return (
-                    <div key={section} className='results__section'>
+                    <div key={key} className='results__section'>
                         <div
                             className='results__header'
-                            onClick={() => togggleSection(section)}
+                            onClick={() => togggleSection(displayName)}
                         >
-                            {section} <span>{activeSection === section ? "▲" : "▼"}</span>
+                            {displayName} <span>{activeSection === displayName ? "▲" : "▼"}</span>
                         </div>
-                        {activeSection === section && (
+                        {activeSection === displayName && (
                             <ul className='results__list'>
                                 {items.map((item) => (
-                                    <li key={item.itemNumber} className='results__item'>
-                                        <stong>{item.itemNumber}</stong>: {item.description} - Current Max: {item.maxThreshold}
+                                    <li key={item._id} className='results__item'>
+                                        <stong>{item.itemNumber}</stong>: {item.description} - Suggested Max: {item.suggestedMax}
                                     </li>
                                 ))}
                             </ul>
